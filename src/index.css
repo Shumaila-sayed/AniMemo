@@ -7,7 +7,27 @@
   font-style: normal;
 }
 
+
 @theme {
     --background-image-anime: url('/background-anime.webp');
 }
 
+@utility card-container {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax( 22em, 1fr));
+    padding: 2em 4em;
+    place-items: center;
+    gap: 2em;
+}
+
+@utility card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.673);
+  padding: 1em;
+  border-radius: 1em;
+  cursor: pointer;
+}
