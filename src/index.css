@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'anime_font';
+  src: url('/fonts/anime-font.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+    --background-image-anime: url('/background-anime.webp');
+}
+
