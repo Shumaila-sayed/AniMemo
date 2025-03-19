@@ -1,33 +1,80 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @font-face {
-  font-family: 'anime_font';
-  src: url('/fonts/anime-font.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'anime_font';
+	src: url('/fonts/anime-font.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
 }
 
-
 @theme {
-    --background-image-anime: url('/background-anime.webp');
+	--background-image-anime: url('/background-anime.webp');
 }
 
 @utility card-container {
-    display: grid;
-    grid-template-columns: repeat( auto-fit, minmax( 22em, 1fr));
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(10em, 0.8fr));
+	padding: 2em 0;
+  row-gap: 2em;
+	place-items: center;
+	
+
+  @media (width >= 40rem) {
+    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
     padding: 2em 4em;
-    place-items: center;
-    gap: 2em;
+  }
+
+  @media (width >= 64rem) {
+     grid-template-columns: repeat(auto-fit, minmax(22em, 1fr));
+  }
+
 }
 
 @utility card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4em;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.673);
-  padding: 1em;
-  border-radius: 1em;
-  cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4em;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.673);
+	padding: 1em;
+	border-radius: 1em;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.5s ease;
+
+	& p {
+		font-size: 2rem;
+		position: relative;
+		z-index: 2;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: linear-gradient(
+			0deg,
+			transparent,
+			transparent 30%,
+			rgba(241, 218, 82, 0.5)
+		);
+		transform: rotate(-45deg);
+		transition: all 0.5s ease;
+		opacity: 0;
+	}
+
+	&:hover {
+		transform: scale(1.05);
+		box-shadow: 0 0 20px rgba(241, 218, 82, 0.7);
+	}
+
+	&:hover::before {
+		opacity: 1;
+		transform: rotate(-45deg) translateY(100%);
+	}
 }
