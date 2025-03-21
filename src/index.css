@@ -13,16 +13,11 @@
 
 @utility card-container {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(10em, 0.8fr));
+	grid-template-columns: repeat(auto-fit, minmax(15em, 0.8fr));
 	padding: 2em 0;
   row-gap: 2em;
 	place-items: center;
-	
-
-  @media (width >= 40rem) {
-    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
-    padding: 2em 4em;
-  }
+	margin: 0 4em;
 
   @media (width >= 64rem) {
      grid-template-columns: repeat(auto-fit, minmax(22em, 1fr));

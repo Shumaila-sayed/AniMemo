@@ -6,7 +6,7 @@ const AnimeCard = ({ char: { name, images } }) => {
 				src={images.jpg.image_url}
 				alt={name}
 			/>
-			<p className='text-amber-950 font-bold text-2xl relative z-10'>{name}</p>
+			<p className='text-amber-950 font-bold text-2xl relative z-10 text-center'>{name}</p>
 		</div>
 	);
 };

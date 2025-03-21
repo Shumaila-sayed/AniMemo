@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 import AnimeCard from './Components/AnimeCard';
 import ScoreBoard from './Components/ScoreBoard';
+import Spinner from './Components/Spinner';
 
 const App = () => {
 	const [charList, setCharList] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const fetchCharacters = async (limit = 6) => {
+		setIsLoading(true);
+		setErrorMessage('');
+
 		try {
 			const response = await fetch(
 				`https://api.jikan.moe/v4/top/characters?page=${
@@ -18,7 +24,8 @@ const App = () => {
 
 			const data = await response.json();
 			if (data.Response === 'False') {
-				console.log(data.Error || 'Failed to fetch characters');
+				setErrorMessage(data.Error || 'Failed to fetch characters.');
+				setCharList([]);
 				return;
 			}
 
@@ -29,11 +36,15 @@ const App = () => {
 					.slice(0, limit);
 
 				setCharList(charactersArr);
+				setIsLoading(false);
 			} else {
 				console.log('Failed to fetch characters');
 			}
 		} catch (error) {
 			console.error(`Error fetching characters: ${error}`);
+			setErrorMessage('Error fetching characters. Please try again later.');
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -41,23 +52,35 @@ const App = () => {
 		fetchCharacters();
 	}, []);
 
+	console.log(charList);
+
 	return (
-		<div className='bg-anime bg-no-repeat bg-cover w-full'>
+		<div
+			className={`bg-anime bg-no-repeat bg-cover w-full min-h-screen` }
+		>
 			<h1
-				className='lg:text-6xl text-3xl text-center pt-7 text-yellow-50 '
+				className='lg:text-6xl text-3xl text-center pt-7 text-yellow-50 cursor-pointer '
 				style={{ fontFamily: 'anime_font, sans-serif' }}
 			>
 				AniMemo
 			</h1>
 			<ScoreBoard />
-			<div className='card-container'>
-				{charList.map((char) => (
-					<AnimeCard
-						key={char.mal_id}
-						char={char}
-					/>
-				))}
-			</div>
+
+			{isLoading ? (
+				<Spinner />
+			) : errorMessage ? (
+				<p className='text-red-800 text-center mt-15 text-2xl'>{errorMessage}</p>
+			) : (
+				<div className='card-container'>
+						{charList.map((char) => (
+						char.hasClicked = false,
+						<AnimeCard
+							key={char.mal_id}
+							char={char}
+							/>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
