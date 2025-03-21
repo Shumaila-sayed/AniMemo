@@ -1,13 +1,13 @@
-const AnimeCard = ({ char: { name, img_path } }) => {
+const AnimeCard = ({ char: { name, images } }) => {
 	return (
-            <div className="card">
-                <img className="lg:h-50 h-40 w-30 lg:w-45"
-				src={img_path}
+		<div className='card'>
+			<img
+				className='lg:h-60 h-40 w-30 lg:w-48'
+				src={images.jpg.image_url}
 				alt={name}
 			/>
-			<p className="text-2xl text-amber-950 font-bold">{name}</p>
-            </div>
-			
+			<p className='text-amber-950 font-bold text-2xl relative z-10'>{name}</p>
+		</div>
 	);
 };
 

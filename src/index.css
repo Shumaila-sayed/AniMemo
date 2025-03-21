@@ -30,51 +30,26 @@
 
 }
 
-@utility card {
-	display: flex;
-	flex-direction: column;
-	gap: 0.4em;
-	justify-content: center;
-	align-items: center;
-	background-color: rgba(255, 255, 255, 0.673);
-	padding: 1em;
-	border-radius: 1em;
-	cursor: pointer;
-	position: relative;
-	overflow: hidden;
-	transition: all 0.5s ease;
+@layer utilities {
+  .card {
+    @apply flex flex-col gap-[0.4em] justify-center items-center bg-white/70 p-4 rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_rgba(241,218,82,0.7)];
+  }
 
-	& p {
-		font-size: 2rem;
-		position: relative;
-		z-index: 2;
-	}
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(0deg, transparent, transparent 30%, rgba(241, 218, 82, 0.5));
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+  }
 
-	&::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		left: -50%;
-		width: 200%;
-		height: 200%;
-		background: linear-gradient(
-			0deg,
-			transparent,
-			transparent 30%,
-			rgba(241, 218, 82, 0.5)
-		);
-		transform: rotate(-45deg);
-		transition: all 0.5s ease;
-		opacity: 0;
-	}
-
-	&:hover {
-		transform: scale(1.05);
-		box-shadow: 0 0 20px rgba(241, 218, 82, 0.7);
-	}
-
-	&:hover::before {
-		opacity: 1;
-		transform: rotate(-45deg) translateY(100%);
-	}
+  .card:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
+  }
 }
