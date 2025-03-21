@@ -8,6 +8,8 @@ const App = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
+	 const [isFlipped, setIsFlipped] = useState(false);
+
 	const fetchCharacters = async (limit = 6) => {
 		setIsLoading(true);
 		setErrorMessage('');
@@ -36,6 +38,7 @@ const App = () => {
 					.slice(0, limit);
 
 				setCharList(charactersArr);
+				console.log(charactersArr)
 				setIsLoading(false);
 			} else {
 				console.log('Failed to fetch characters');
@@ -52,7 +55,20 @@ const App = () => {
 		fetchCharacters();
 	}, []);
 
-	console.log(charList);
+	 useEffect(() => {
+			if (isFlipped) {
+				const timer = setTimeout(() => setIsFlipped(false), 1000);
+				return () => clearTimeout(timer);
+			}
+		}, [isFlipped]);
+
+	
+	const handleClick = (e) => {
+		 setIsFlipped(!isFlipped);
+		console.log(e.target.dataset.info);
+		
+		setCharList((prev) => prev.sort(() => 0.5 - Math.random()));
+	}
 
 	return (
 		<div
@@ -75,8 +91,11 @@ const App = () => {
 						{charList.map((char) => (
 						char.hasClicked = false,
 						<AnimeCard
-							key={char.mal_id}
-							char={char}
+								key={
+								char.mal_id}
+								char={char}
+								handleClick={handleClick}
+								isFlipped={isFlipped}
 							/>
 					))}
 				</div>
