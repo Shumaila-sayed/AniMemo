@@ -2,13 +2,14 @@ const AnimeCard = ({ char: { name, images }, handleClick, isFlipped }) => {
 	return (
 		<div
 			className={`relative h-[300px] w-[200px] transition-transform duration-700 [transform-style:preserve-3d] ${
-				isFlipped ? 'rotate-y-180' : ''
+				isFlipped ? 'rotate-y-180' : 'rotate-y-0'
 			}`}
 			onClick={(e) => handleClick(e)}
 		>
 			{/* Front Side */}
 			<div
 				className='card'
+				data-info={name}
 			>
 				<img
 					className='h-[85%] w-full object-cover rounded-t-xl'

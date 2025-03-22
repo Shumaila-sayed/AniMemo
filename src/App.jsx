@@ -55,19 +55,20 @@ const App = () => {
 		fetchCharacters();
 	}, []);
 
-	 useEffect(() => {
-			if (isFlipped) {
-				const timer = setTimeout(() => setIsFlipped(false), 1000);
-				return () => clearTimeout(timer);
-			}
-		}, [isFlipped]);
-
 	
 	const handleClick = (e) => {
-		 setIsFlipped(!isFlipped);
+		setIsFlipped(true);
 		console.log(e.target.dataset.info);
-		
-		setCharList((prev) => prev.sort(() => 0.5 - Math.random()));
+		setTimeout(() => {
+			setCharList((prev) => {
+				const shuffled = [...prev].sort(() => 0.5 - Math.random());
+				return shuffled;
+			});
+
+			setTimeout(() => {
+				setIsFlipped(false); // Reset flip state AFTER shuffle
+			}, 500); // Slight delay to prevent abrupt changes
+		}, 1000); // Wait for the flip animation to complete
 	}
 
 	return (
