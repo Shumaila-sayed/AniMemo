@@ -8,7 +8,9 @@ const App = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	 const [isFlipped, setIsFlipped] = useState(false);
+	const [score, setScore] = useState(0);
+
+	const [isFlipped, setIsFlipped] = useState(false);
 
 	const fetchCharacters = async (limit = 6) => {
 		setIsLoading(true);
@@ -32,13 +34,17 @@ const App = () => {
 			}
 
 			if (data.data && data.data.length > 0) {
-				//Sort to randomize character from the page and Slice to limit the number of characters
+				//Sort to randomize character from the page and Slice to limit the number of characters and Ensure each character starts with this property
 				let charactersArr = data.data
 					.sort(() => 0.5 - Math.random())
-					.slice(0, limit);
+					.slice(0, limit)
+					.map((char) => ({
+						...char,
+						hasClicked: false,
+					}));
 
 				setCharList(charactersArr);
-				console.log(charactersArr)
+				console.log(charactersArr);
 				setIsLoading(false);
 			} else {
 				console.log('Failed to fetch characters');
@@ -55,10 +61,10 @@ const App = () => {
 		fetchCharacters();
 	}, []);
 
-	
 	const handleClick = (e) => {
+		flipToTrue(e.target.dataset.info);
 		setIsFlipped(true);
-		console.log(e.target.dataset.info);
+
 		setTimeout(() => {
 			setCharList((prev) => {
 				const shuffled = [...prev].sort(() => 0.5 - Math.random());
@@ -66,38 +72,49 @@ const App = () => {
 			});
 
 			setTimeout(() => {
-				setIsFlipped(false); // Reset flip state AFTER shuffle
-			}, 500); // Slight delay to prevent abrupt changes
-		}, 1000); // Wait for the flip animation to complete
-	}
+				setIsFlipped(false);
+			}, 500);
+		}, 1000);
+	};
+
+	const flipToTrue = (name) => {
+		setCharList((prevCharList) => {
+			const updatedList = prevCharList.map((char) => {
+				if (char.name === name && !char.hasClicked) {
+					setScore((prev) => prev + 1);
+					return { ...char, hasClicked: true };
+				}
+				return char;
+			});
+			return updatedList;
+		});
+	};
 
 	return (
-		<div
-			className={`bg-anime bg-no-repeat bg-cover w-full min-h-screen` }
-		>
+		<div className={`bg-anime bg-no-repeat bg-cover w-full min-h-screen`}>
 			<h1
 				className='lg:text-6xl text-3xl text-center pt-7 text-yellow-50 cursor-pointer '
 				style={{ fontFamily: 'anime_font, sans-serif' }}
 			>
 				AniMemo
 			</h1>
-			<ScoreBoard />
+			<ScoreBoard score={score} />
 
 			{isLoading ? (
 				<Spinner />
 			) : errorMessage ? (
-				<p className='text-red-800 text-center mt-15 text-2xl'>{errorMessage}</p>
+				<p className='text-red-800 text-center mt-15 text-2xl'>
+					{errorMessage}
+				</p>
 			) : (
 				<div className='card-container'>
-						{charList.map((char) => (
-						char.hasClicked = false,
+					{charList.map((char) => (
 						<AnimeCard
-								key={
-								char.mal_id}
-								char={char}
-								handleClick={handleClick}
-								isFlipped={isFlipped}
-							/>
+							key={char.mal_id}
+							char={char}
+							handleClick={handleClick}
+							isFlipped={isFlipped}
+						/>
 					))}
 				</div>
 			)}
