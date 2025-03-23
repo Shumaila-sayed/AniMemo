@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 
-
 const GameModal = forwardRef(({ modal: [text, imgUrl, score], playAgain  }, ref) => {
 
 	return (

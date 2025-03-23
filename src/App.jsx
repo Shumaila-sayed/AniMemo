@@ -13,6 +13,7 @@ const App = () => {
 	const [modal, setModal] = useState([]);
 
 	const [score, setScore] = useState(0);
+	const [highScore, setHighScore] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
 
 	const fetchCharacters = async (limit = 6) => {
@@ -64,6 +65,7 @@ const App = () => {
 		setIsModalOpen(false);
 		dialogRef.current.close();
 		fetchCharacters()
+		setScore(0)
 	}
 
 	useEffect(() => {
@@ -73,9 +75,8 @@ const App = () => {
 	const dialogRef = useRef(null);
 
 	const openModal = (text, imgUrl) => {
-
+		
 		setModal([text, imgUrl, score])
-		//setModalText(text);
 		setIsModalOpen(true);
 
 		setTimeout(() => {
@@ -91,6 +92,12 @@ const App = () => {
 			charList.length > 0 &&
 			charList.every((char) => char.hasClicked === true)
 		) {
+			setHighScore(() => {
+				if (highScore < score) {
+					return score
+				}
+				return highScore;
+			})
 			openModal('You Win!', '/win.jpg');
 		}
 	}, [charList]);
@@ -117,6 +124,12 @@ const App = () => {
 		);
 
 		if (alreadyClicked) {
+			setHighScore(() => {
+				if (highScore < score) {
+					return score;
+				} 
+				return highScore
+			});
 			openModal('You Lose!', '/lose.jpg');
 			return;
 		}
@@ -141,7 +154,7 @@ const App = () => {
 			>
 				AniMemo
 			</h1>
-			<ScoreBoard score={score} />
+			<ScoreBoard score={score} highScore={highScore} />
 
 			{isLoading ? (
 				<Spinner />
