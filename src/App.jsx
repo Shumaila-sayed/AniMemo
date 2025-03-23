@@ -48,7 +48,6 @@ const App = () => {
 					}));
 
 				setCharList(charactersArr);
-				console.log(charactersArr);
 				setIsLoading(false);
 			} else {
 				console.log('Failed to fetch characters');
