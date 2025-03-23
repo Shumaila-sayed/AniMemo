@@ -61,10 +61,19 @@ const App = () => {
 		fetchCharacters();
 	}, []);
 
-	const handleClick = (e) => {
-		flipToTrue(e.target.dataset.info);
-		setIsFlipped(true);
+	useEffect(() => {
+		if (
+			charList.length > 0 &&
+			charList.every((char) => char.hasClicked === true)
+		) {
+			console.log('You win');
+		}
+	}, [charList])
 
+	const handleClick = (e) => {
+		gameFlow(e.target.dataset.info);
+
+		setIsFlipped(true);
 		setTimeout(() => {
 			setCharList((prev) => {
 				const shuffled = [...prev].sort(() => 0.5 - Math.random());
@@ -77,7 +86,12 @@ const App = () => {
 		}, 1000);
 	};
 
-	const flipToTrue = (name) => {
+
+	const gameFlow = (name) => {
+		charList.map((char) =>
+			char.name === name && char.hasClicked ? console.log('you lose') : null
+		);
+
 		setCharList((prevCharList) => {
 			const updatedList = prevCharList.map((char) => {
 				if (char.name === name && !char.hasClicked) {
