@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AnimeCard from './Components/AnimeCard';
 import ScoreBoard from './Components/ScoreBoard';
 import Spinner from './Components/Spinner';
+import GameModal from './Components/GameModal';
 
 const App = () => {
 	const [charList, setCharList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const [score, setScore] = useState(0);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [modal, setModal] = useState([]);
 
+	const [score, setScore] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
 
 	const fetchCharacters = async (limit = 6) => {
@@ -57,18 +60,40 @@ const App = () => {
 		}
 	};
 
+	function playAgain() {
+		setIsModalOpen(false);
+		dialogRef.current.close();
+		fetchCharacters()
+	}
+
 	useEffect(() => {
 		fetchCharacters();
 	}, []);
+
+	const dialogRef = useRef(null);
+
+	const openModal = (text, imgUrl) => {
+
+		setModal([text, imgUrl, score])
+		//setModalText(text);
+		setIsModalOpen(true);
+
+		setTimeout(() => {
+			if (dialogRef.current) {
+				dialogRef.current.showModal();
+				
+			}
+		}, 0);
+	};
 
 	useEffect(() => {
 		if (
 			charList.length > 0 &&
 			charList.every((char) => char.hasClicked === true)
 		) {
-			console.log('You win');
+			openModal('You Win!', '/win.jpg');
 		}
-	}, [charList])
+	}, [charList]);
 
 	const handleClick = (e) => {
 		gameFlow(e.target.dataset.info);
@@ -85,12 +110,16 @@ const App = () => {
 			}, 500);
 		}, 1000);
 	};
-
-
+                                                                                                                           
 	const gameFlow = (name) => {
-		charList.map((char) =>
-			char.name === name && char.hasClicked ? console.log('you lose') : null
+		const alreadyClicked = charList.some(
+			(char) => char.name === name && char.hasClicked
 		);
+
+		if (alreadyClicked) {
+			openModal('You Lose!', '/lose.jpg');
+			return;
+		}
 
 		setCharList((prevCharList) => {
 			const updatedList = prevCharList.map((char) => {
@@ -132,8 +161,16 @@ const App = () => {
 					))}
 				</div>
 			)}
+
+			{isModalOpen && (
+				<GameModal
+					modal={modal}
+					ref={dialogRef}
+					playAgain={playAgain}
+				/>
+			)}
 		</div>
 	);
 };
 
-export default App;
+export default App
