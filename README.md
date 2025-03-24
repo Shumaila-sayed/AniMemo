@@ -1,6 +1,6 @@
 # Animemo 🎴✨
 
-Animemo is a fun and interactive memory game built using React and styled with Tailwind CSS. The game fetches anime images from the Jikan API and challenges players to click unique images without repeating any selections. Whether you're an anime enthusiast or just someone looking for a fun challenge, Animemo offers an engaging experience. 🎌🃏🔥
+Animemo is a fun and interactive memory game built using React and styled with Tailwind CSS. The game fetches anime images from the Jikan API and challenges players to click unique images without repeating any selections. Whether you're an anime enthusiast or just someone looking for a fun challenge, Animemo offers an engaging experience. 🎌
 
 ## Features 🎯
 
@@ -15,7 +15,7 @@ Animemo is a fun and interactive memory game built using React and styled with T
 
 The project is deployed on **Vercel**. The latest version is available for play anytime. You can check it out [here](https://animemo.vercel.app/). 🎉
 
-## ScreenShots 💻
+## ScreenShot 💻
 
 ![Screenshot of AniMemo](/public/screenshot.png)
 
@@ -29,4 +29,4 @@ The project is deployed on **Vercel**. The latest version is available for play 
 
 ---
 
-Enjoy playing **Animemo**, challenge your memory, and explore amazing anime visuals! 🎮✨🎏
+Enjoy playing **Animemo**, and challenge your memory!✨
