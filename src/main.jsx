@@ -8,3 +8,9 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+
+// TODO: 
+// make cards smaller in small screen
+// local storage for best scores
+// Ability to choose more or less cards / levels
