@@ -1,7 +1,7 @@
 const AnimeCard = ({ char: { name, images }, handleClick, isFlipped }) => {
 	return (
 		<div
-			className={`relative h-[300px] w-[200px] transition-transform duration-700 [transform-style:preserve-3d] ${
+			className={`relative md:h-[300px] md:w-[200px] h-[240px] w-[160px] transition-transform duration-700 [transform-style:preserve-3d] ${
 				isFlipped ? 'rotate-y-180' : 'rotate-y-0'
 			}`}
 			onClick={(e) => handleClick(e)}
@@ -19,7 +19,7 @@ const AnimeCard = ({ char: { name, images }, handleClick, isFlipped }) => {
 				/>
 				<p
 					data-info={name}
-					className='text-amber-950 font-bold text-lg py-2'
+					className='text-amber-950 text-center font-bold text-lg md:py-2  h-[15%]'
 				>
 					{name}
 				</p>
