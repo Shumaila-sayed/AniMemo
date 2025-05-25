@@ -29,4 +29,4 @@ The project is deployed on **Vercel**. The latest version is available for play 
 
 ---
 
-Enjoy playing **Animemo**, and challenge your memory!✨
+Enjoy playing **Animemo**, and challenge your memory!
