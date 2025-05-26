@@ -4,7 +4,7 @@ import ScoreBoard from '../Components/ScoreBoard';
 import Spinner from '../Components/Spinner';
 import GameModal from '../Components/GameModal';
 
-const Game = () => {
+const Game = ({ limit }) => {
 	const [charList, setCharList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -16,7 +16,7 @@ const Game = () => {
 	const [highScore, setHighScore] = useState(0);
 	const [isFlipped, setIsFlipped] = useState(false);
 
-	const fetchCharacters = async (limit = 6) => {
+	const fetchCharacters = async (limit) => {
 		setIsLoading(true);
 		setErrorMessage('');
 
@@ -63,12 +63,12 @@ const Game = () => {
 	function playAgain() {
 		setIsModalOpen(false);
 		dialogRef.current.close();
-		fetchCharacters();
+		fetchCharacters(limit);
 		setScore(0);
 	}
 
 	useEffect(() => {
-		fetchCharacters();
+		fetchCharacters(limit);
 	}, []);
 
 	const dialogRef = useRef(null);
